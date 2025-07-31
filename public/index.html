@@ -1,33 +1,220 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Anonymous Report</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <title>Anonymous Report App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    /* Hero background */
+    body {
+      margin: 0;
+      background: url('https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Frosted glass effect */
+    .glass-card {
+      backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      margin-top: 50px;
+    }
+
+    .logo {
+      width: 50px;
+      margin-top: 5px;
+    }
+
+    .illustration {
+      border-radius: 8px;
+      width: 100%;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .input-field label,
+    .collapsible-header,
+    .modal-content p,
+    .modal-content h5,
+    .modal-footer .btn {
+      color: #e0e0e0;
+    }
+
+    .nav-wrapper {
+      background-color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-logo span {
+      font-size: 1.3rem;
+      margin-left: 10px;
+    }
+
+    ::placeholder {
+      color: #bdbdbd;
+    }
+  </style>
 </head>
+
 <body>
 
+  <!-- Navbar -->
   <nav>
-    <div class="nav-wrapper teal">
-      <a href="#" class="brand-logo center">Anonymous Report</a>
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo">
+        <img src="https://img.icons8.com/color/96/anonymous-mask.png" class="logo" />
+        <span>AnonReport</span>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#!">About</a></li>
+        <li><a href="#!">Support</a></li>
+      </ul>
     </div>
   </nav>
 
+  <!-- Main Content -->
   <div class="container">
-    <h5>Submit Your Report</h5>
-    <form method="POST" action="/submit">
-      <div class="input-field">
-        <input id="name" name="name" type="text">
-        <label for="name">Your Name (optional)</label>
+    <div class="row">
+
+      <!-- Left Illustration -->
+      <div class="col s12 m6">
+        <img src="https://cdn.pixabay.com/photo/2021/06/28/21/06/anonymous-6370815_960_720.jpg" class="illustration" alt="Illustration" />
       </div>
-      <div class="input-field">
-        <textarea id="description" name="description" class="materialize-textarea"></textarea>
-        <label for="description">Describe the incident</label>
+
+      <!-- Report Form -->
+      <div class="col s12 m6">
+        <div class="glass-card z-depth-5">
+
+          <h5 class="center-align"><i class="material-icons">report_problem</i> Submit Anonymous Report</h5>
+
+          <form id="reportForm" method="POST" action="/submit">
+
+            <div class="input-field">
+              <input id="title" name="title" type="text" placeholder="E.g. Workplace Harassment" required />
+              <label for="title">Incident Title</label>
+            </div>
+
+            <div class="input-field">
+              <textarea id="description" name="description" class="materialize-textarea" placeholder="Describe the incident..." required></textarea>
+              <label for="description">Incident Description</label>
+            </div>
+
+            <div class="input-field">
+              <select id="category" name="category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="harassment">Harassment</option>
+                <option value="discrimination">Discrimination</option>
+                <option value="safety">Safety</option>
+                <option value="other">Other</option>
+              </select>
+              <label for="category">Category</label>
+            </div>
+
+            <div class="input-field">
+              <input type="text" id="date" name="date" class="datepicker" placeholder="Pick a date" required>
+              <label for="date">Date of Incident</label>
+            </div>
+
+            <!-- Collapsible optional witness -->
+            <ul class="collapsible">
+              <li>
+                <div class="collapsible-header"><i class="material-icons">person</i> Optional Witness Info</div>
+                <div class="collapsible-body">
+                  <div class="input-field">
+                    <input id="witness" name="witness" type="text" placeholder="Witness Name" />
+                    <label for="witness">Witness Name</label>
+                  </div>
+                  <div class="input-field">
+                    <input id="contact" name="contact" type="email" placeholder="Witness Email" />
+                    <label for="contact">Witness Email</label>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <div class="center-align" style="margin-top: 30px;">
+              <a class="btn-large modal-trigger deep-purple darken-3" href="#confirmModal">
+                <i class="material-icons left">send</i>Submit
+              </a>
+            </div>
+
+          </form>
+
+        </div>
       </div>
-      <button class="btn waves-effect waves-light" type="submit">Submit Report</button>
-    </form>
+    </div>
   </div>
 
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <h5>Confirm Report</h5>
+      <p>Are you sure you want to submit this report anonymously?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close btn-flat grey lighten-1">Cancel</a>
+      <button class="btn deep-purple darken-3" onclick="submitForm()">Yes, Submit</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      M.FormSelect.init(document.querySelectorAll('select'));
+      M.Collapsible.init(document.querySelectorAll('.collapsible'));
+      M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+        format: 'yyyy-mm-dd',
+        autoClose: true,
+        yearRange: 10,
+        theme: 'dark'
+      });
+      M.Modal.init(document.querySelectorAll('.modal'));
+    });
+
+    function submitForm() {
+      document.getElementById('reportForm').submit();
+      M.toast({ html: 'Submitting report...', classes: 'rounded', displayLength: 3000 });
+    }
+  </script>
+<!-- Footer -->
+<footer class="page-footer blue darken-2">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">Anonymous Report System</h5>
+        <p class="grey-text text-lighten-4">
+          Your privacy is our priority. We ensure that all reports are handled confidentially.
+        </p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Quick Links</h5>
+        <ul>
+          <li><a class="grey-text text-lighten-3" href="/">Home</a></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Admin Panel</a></li>
+          <li><a class="grey-text text-lighten-3" href="#!">Help</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      © 2025 Anonymous Report App
+      <a class="grey-text text-lighten-4 right" href="#!">More Info</a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
