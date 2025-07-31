@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const { clear } = require('console');
 
 const app = express();
 const PORT = 3000;
@@ -14,8 +13,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/submit', (req, res) => {
-  const { name, description } = req.body;
-  console.log('Received report:', { name, description });
+  const { title, description } = req.body;
+  console.log('Received report:', { title, description });
   res.send(`<h4>Thank you. Your report has been submitted anonymously.</h4><a href="/">Back</a>`);
 });
 
