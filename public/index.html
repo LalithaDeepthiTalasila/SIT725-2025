@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Anonymous Report</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-wrapper teal">
+      <a href="#" class="brand-logo center">Anonymous Report</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h5>Submit Your Report</h5>
+    <form method="POST" action="/submit">
+      <div class="input-field">
+        <input id="name" name="name" type="text">
+        <label for="name">Your Name (optional)</label>
+      </div>
+      <div class="input-field">
+        <textarea id="description" name="description" class="materialize-textarea"></textarea>
+        <label for="description">Describe the incident</label>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit">Submit Report</button>
+    </form>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
