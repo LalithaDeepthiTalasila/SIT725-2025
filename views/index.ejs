@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample MVC App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Items</h1>
+    <ul>
+        <% items.forEach(i => { %>
+            <li><%= i %></li>
+        <% }) %>
+    </ul>
+
+    <form action="/add" method="POST">
+        <input type="text" name="item" placeholder="Add new item" required>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
