@@ -1,11 +1,8 @@
-const sampleModel = require('../models/sampleModel');
+const mongoose = require('mongoose');
 
-exports.showHome = (req, res) => {
-    const items = sampleModel.getAll();
-    res.render('index', { items });
-};
+const UserSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+}, { timestamps: true });
 
-exports.addItem = (req, res) => {
-    sampleModel.add(req.body.item);
-    res.redirect('/');
-};
+module.exports = mongoose.model('User', UserSchema);

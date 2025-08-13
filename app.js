@@ -1,22 +1,18 @@
 const express = require('express');
-const path = require('path');
-const sampleRoutes = require('./routes/sampleRoutes');
+const connectDB = require('./config/db');
 
 const app = express();
 
 // Middleware
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 
-// View engine setup
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+// Connect to DB
+connectDB();
 
 // Routes
+const sampleRoutes = require('./routes/sampleRoutes');
 app.use('/', sampleRoutes);
 
-// Server
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000');
 });
